@@ -1,27 +1,27 @@
 # Medical Scheduling SaaS Application
 
-Application SaaS complète de planification médicale avec gestion des rendez-vous et des disponibilités.
+Complete SaaS medical scheduling application with appointment and availability management.
 
-## 🏗️ Structure du Projet
+## 🏗️ Project Structure
 
 ```
 Projet_UA3_Final/
-├── database_complete_schema.sql    # Schéma de base de données complet avec données d'exemple
-├── backend/                         # Backend Spring Boot
-│   ├── pom.xml                      # Dépendances Maven
+├── database_complete_schema.sql    # Complete database schema with sample data
+├── backend/                         # Spring Boot Backend
+│   ├── pom.xml                      # Maven dependencies
 │   └── src/main/
 │       ├── java/com/saas/medicalapp/
-│       │   ├── MedicalAppApplication.java    # Classe principale Spring Boot
+│       │   ├── MedicalAppApplication.java    # Spring Boot main class
 │       │   ├── config/
-│       │   │   └── CorsConfig.java          # Configuration CORS
-│       │   ├── model/                       # Entités JPA
-│       │   ├── repository/                  # Repositories JPA
-│       │   ├── service/                     # Logique métier
-│       │   └── controller/                  # Contrôleurs REST
+│       │   │   └── CorsConfig.java          # CORS configuration
+│       │   ├── model/                       # JPA entities
+│       │   ├── repository/                  # JPA repositories
+│       │   ├── service/                     # Business logic
+│       │   └── controller/                  # REST controllers
 │       └── resources/
 │           └── application.properties       # Configuration
 ├── frontend/
-│   ├── client/                             # Dashboard Client (Médecins, Infirmières, Personnel)
+│   ├── client/                             # Client Dashboard (Physicians, Nurses, Staff)
 │   │   ├── login.html
 │   │   ├── dashboard.html
 │   │   ├── appointments.html
@@ -29,7 +29,7 @@ Projet_UA3_Final/
 │   │   ├── task-detail.html
 │   │   ├── style.css
 │   │   └── client.js
-│   └── manager/                            # Panneau Manager (Managers, Admins)
+│   └── manager/                            # Manager Panel (Managers, Admins)
 │       ├── dashboard.html
 │       ├── users.html
 │       ├── locations.html
@@ -40,86 +40,86 @@ Projet_UA3_Final/
 └── README.md
 ```
 
-## 🛠️ Technologies Utilisées
+## 🛠️ Technologies Used
 
 ### Backend
 - **Java 17**
 - **Spring Boot 3.1.5**
-- **Spring Data JPA** (accès à la base de données)
-- **MySQL Connector** (pilote de base de données)
-- **Maven** (gestion des dépendances)
+- **Spring Data JPA** (database access)
+- **MySQL Connector** (database driver)
+- **Maven** (dependency management)
 
 ### Frontend
 - **HTML5**
-- **CSS3** (thème beige, design simplifié)
-- **JavaScript Vanilla** (sans frameworks)
-- **Fetch API** (appels API)
+- **CSS3** (beige theme, simplified design)
+- **Vanilla JavaScript** (no frameworks)
+- **Fetch API** (API calls)
 
-### Base de données
-- **MySQL** ou **MariaDB**
-- **SQL** (définition du schéma et requêtes)
+### Database
+- **MySQL** or **MariaDB**
+- **SQL** (schema definition and queries)
 
-## 📊 Schéma de Base de Données
+## 📊 Database Schema
 
-Le projet utilise 7 tables principales :
-1. **roles** - Rôles des utilisateurs
-2. **users** - Utilisateurs du système
-3. **locations** - Lieux médicaux
-4. **availability** - Disponibilités des utilisateurs
+The project uses 7 main tables:
+1. **roles** - User roles
+2. **users** - System users
+3. **locations** - Medical locations
+4. **availability** - User availability
 5. **patients** - Patients
-6. **appointments** - Rendez-vous
-7. **assignments** - Assignations (table de jonction)
+6. **appointments** - Appointments
+7. **assignments** - Assignments (junction table)
 
-Voir `database_complete_schema.sql` pour le schéma complet.
+See `database_complete_schema.sql` for the complete schema.
 
-## 🚀 Installation et Configuration
+## 🚀 Installation and Configuration
 
-### 1. Base de données
+### 1. Database
 
-1. Créer une base de données MySQL nommée `medicaldb`:
+1. Create a MySQL database named `medicaldb`:
 ```sql
 CREATE DATABASE medicaldb;
 ```
 
-2. Exécuter le script SQL:
+2. Run the SQL script:
 ```bash
 mysql -u root -p medicaldb < database_complete_schema.sql
 ```
 
-### 2. Configuration Backend
+### 2. Backend Configuration
 
-Modifier `src/main/resources/application.properties` si nécessaire:
+Modify `src/main/resources/application.properties` if necessary:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/medicaldb?useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=votre_mot_de_passe
+spring.datasource.password=your_password
 ```
 
-### 3. Compilation et Exécution
+### 3. Compilation and Execution
 
 ```bash
-# Compiler le projet
+# Compile the project
 mvn clean install
 
-# Lancer l'application
+# Run the application
 mvn spring-boot:run
 ```
 
-Le backend sera accessible sur `http://localhost:8080`
+The backend will be accessible at `http://localhost:8080`
 
 ### 4. Frontend
 
-Ouvrir les fichiers HTML directement dans un navigateur ou utiliser un serveur local.
+Open the HTML files directly in a browser or use a local server.
 
-**Note:** Pour éviter les problèmes CORS, ouvrir les fichiers HTML via un serveur HTTP local (par exemple avec Live Server dans VS Code, ou Python `python -m http.server`).
+**Note:** To avoid CORS issues, open the HTML files via a local HTTP server (for example with Live Server in VS Code, or Python `python -m http.server`).
 
-## 🔑 Comptes de Test
+## 🔑 Test Accounts
 
-Voir `database_complete_schema.sql` pour la liste complète.
+See `database_complete_schema.sql` for the complete list.
 
-**Exemples:**
-- Médecin: `lebron.james@medical.com` / `lebron2024`
-- Infirmière: `kylian.mbappe@medical.com` / `mbappe10`
+**Examples:**
+- Physician: `lebron.james@medical.com` / `lebron2024`
+- Nurse: `kylian.mbappe@medical.com` / `mbappe10`
 - Manager: `zlatan.ibrahimovic@medical.com` / `zlatan10`
 - Admin: `admin@medical.com` / `admin123`
 
@@ -127,75 +127,74 @@ Voir `database_complete_schema.sql` pour la liste complète.
 
 ### Base URL: `http://localhost:8080`
 
-- **POST** `/auth/register` - Inscription
-- **POST** `/auth/login` - Connexion
-- **GET** `/auth/logout` - Déconnexion
-- **GET** `/users` - Liste des utilisateurs
-- **GET** `/locations` - Liste des lieux
-- **GET** `/availability?userId=1` - Disponibilités d'un utilisateur
-- **GET** `/patients` - Liste des patients
-- **GET** `/appointments?userId=1` - Rendez-vous d'un utilisateur
-- **POST** `/appointments` - Créer un rendez-vous
-- **PUT** `/appointments/{id}/status` - Mettre à jour le statut
-- **GET** `/assignments?userId=1` - Assignations d'un utilisateur
+- **POST** `/auth/register` - Registration
+- **POST** `/auth/login` - Login
+- **GET** `/auth/logout` - Logout
+- **GET** `/users` - List users
+- **GET** `/locations` - List locations
+- **GET** `/availability?userId=1` - User availability
+- **GET** `/patients` - List patients
+- **GET** `/appointments?userId=1` - User appointments
+- **POST** `/appointments` - Create appointment
+- **PUT** `/appointments/{id}/status` - Update status
+- **GET** `/assignments?userId=1` - User assignments
 
-Voir la documentation complète dans le fichier de spécification du projet.
+See the complete documentation in the project specification file.
 
-## 🎨 Interface Utilisateur
+## 🎨 User Interface
 
 ### Client Dashboard
-- Connexion
-- Tableau de bord avec statistiques
-- Liste des rendez-vous avec filtres
-- Liste des patients
-- Détails et mise à jour des rendez-vous
+- Login
+- Dashboard with statistics
+- Appointment list with filters
+- Patient list
+- Appointment details and updates
 
 ### Manager Panel
-- Tableau de bord avec statistiques globales
-- Gestion des utilisateurs
-- Gestion des lieux
-- Création de rendez-vous avec vérification de surréservation
-- Analytiques et statistiques
+- Dashboard with global statistics
+- User management
+- Location management
+- Appointment creation with overbooking verification
+- Analytics and statistics
 
-## ⚠️ Fonctionnalités Clés
+## ⚠️ Key Features
 
-### Vérification de Surréservation
-Le système vérifie automatiquement si un nouveau rendez-vous dépasse les disponibilités d'un utilisateur et affiche un avertissement.
+### Overbooking Verification
+The system automatically checks if a new appointment exceeds a user's availability and displays a warning.
 
-### Gestion des Rôles
-- **Physician** - Médecins
-- **Nurse** - Infirmières
-- **Staff** - Personnel
-- **Manager** - Gestionnaires
-- **SuperAdmin** - Administrateurs
+### Role Management
+- **Physician** - Doctors
+- **Nurse** - Nurses
+- **Staff** - Staff members
+- **Manager** - Managers
+- **SuperAdmin** - Administrators
 
-Les utilisateurs sont redirigés vers l'interface appropriée selon leur rôle.
+Users are redirected to the appropriate interface based on their role.
 
-## 📝 Notes Importantes
+## 📝 Important Notes
 
-- Les mots de passe ne sont **pas** hashés dans cette version (à implémenter en production)
-- CORS est configuré pour `http://localhost:63342` (PhpStorm/WebStorm) et `http://localhost:8080`
-- Le thème beige est utilisé pour un design simple et professionnel
-- Tous les endpoints retournent du JSON
+- Passwords are **hashed** with BCrypt in this version
+- CORS is configured for `http://localhost:63342` (PhpStorm/WebStorm) and `http://localhost:8080`
+- The beige theme is used for a simple and professional design
+- All endpoints return JSON
 
-## 🐛 Dépannage
+## 🐛 Troubleshooting
 
-### Problèmes CORS
-Si vous rencontrez des erreurs CORS, vérifiez que:
-1. Le backend est bien lancé sur le port 8080
-2. Les origines autorisées dans `CorsConfig.java` correspondent à votre URL frontend
-3. Vous utilisez un serveur HTTP local pour servir les fichiers HTML
+### CORS Issues
+If you encounter CORS errors, check that:
+1. The backend is running on port 8080
+2. The allowed origins in `CorsConfig.java` match your frontend URL
+3. You are using a local HTTP server to serve the HTML files
 
-### Problèmes de base de données
-1. Vérifiez que MySQL est lancé
-2. Vérifiez les credentials dans `application.properties`
-3. Vérifiez que la base de données `medicaldb` existe
+### Database Issues
+1. Check that MySQL is running
+2. Check the credentials in `application.properties`
+3. Check that the `medicaldb` database exists
 
 ## 📚 Documentation
 
-Pour plus de détails sur la structure du projet, les endpoints API, et la logique métier, consultez la documentation complète fournie dans les spécifications du projet.
+For more details on the project structure, API endpoints, and business logic, consult the complete documentation provided in the project specifications.
 
 ---
 
-**Développé avec Spring Boot 3.1.5 et Java 17**
-
+**Developed with Spring Boot 3.1.5 and Java 17**

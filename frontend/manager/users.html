@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des utilisateurs - Medical Scheduling</title>
+    <title>User Management - Medical Scheduling</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Gestion des utilisateurs</h1>
+            <h1>User Management</h1>
             <div class="user-info">
                 <span id="userName"></span>
-                <button onclick="logout()" class="button">Déconnexion</button>
+                <button onclick="logout()" class="button">Logout</button>
             </div>
         </header>
         
         <nav>
-            <a href="dashboard.html" class="nav-link">Tableau de bord</a>
-            <a href="users.html" class="nav-link active">Utilisateurs</a>
-            <a href="locations.html" class="nav-link">Lieux</a>
-            <a href="create-appointment.html" class="nav-link">Créer rendez-vous</a>
-            <a href="analytics.html" class="nav-link">Analytiques</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="users.html" class="nav-link active">Users</a>
+            <a href="locations.html" class="nav-link">Locations</a>
+            <a href="create-appointment.html" class="nav-link">Create Appointment</a>
+            <a href="analytics.html" class="nav-link">Analytics</a>
         </nav>
         
         <main>
-            <button onclick="showAddUserForm()" class="button">Ajouter un utilisateur</button>
+            <button onclick="showAddUserForm()" class="button">Add User</button>
             
             <div id="addUserForm" class="form-container" style="display: none;">
-                <h2>Ajouter un utilisateur</h2>
+                <h2>Add User</h2>
                 <form id="userForm">
                     <div class="form-group">
-                        <label for="fullName">Nom complet:</label>
+                        <label for="fullName">Full Name:</label>
                         <input type="text" id="fullName" name="fullName" required>
                     </div>
                     <div class="form-group">
@@ -39,11 +39,11 @@
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Mot de passe:</label>
+                        <label for="password">Password:</label>
                         <input type="password" id="password" name="password" required>
                     </div>
                     <div class="form-group">
-                        <label for="roleId">Rôle:</label>
+                        <label for="roleId">Role:</label>
                         <select id="roleId" name="roleId" required>
                             <option value="1">Physician</option>
                             <option value="2">Nurse</option>
@@ -52,8 +52,8 @@
                             <option value="5">SuperAdmin</option>
                         </select>
                     </div>
-                    <button type="submit" class="button">Créer</button>
-                    <button type="button" onclick="hideAddUserForm()" class="button">Annuler</button>
+                    <button type="submit" class="button">Create</button>
+                    <button type="button" onclick="hideAddUserForm()" class="button">Cancel</button>
                 </form>
             </div>
             
@@ -74,4 +74,3 @@
     </script>
 </body>
 </html>
-

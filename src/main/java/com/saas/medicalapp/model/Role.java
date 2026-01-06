@@ -1,5 +1,6 @@
 package com.saas.medicalapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -18,7 +19,11 @@ public class Role {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     
+    @Column(name = "is_medical_role", nullable = false)
+    private Boolean isMedicalRole = false;
+    
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<User> users;
     
     // Constructors
@@ -44,6 +49,14 @@ public class Role {
     
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Boolean getIsMedicalRole() {
+        return isMedicalRole;
+    }
+    
+    public void setIsMedicalRole(Boolean isMedicalRole) {
+        this.isMedicalRole = isMedicalRole;
     }
     
     public List<User> getUsers() {

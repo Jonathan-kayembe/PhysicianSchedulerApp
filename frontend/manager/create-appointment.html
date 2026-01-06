@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un rendez-vous - Medical Scheduling</title>
+    <title>Create Appointment - Medical Scheduling</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Créer un rendez-vous</h1>
+            <h1>Create Appointment</h1>
             <div class="user-info">
                 <span id="userName"></span>
-                <button onclick="logout()" class="button">Déconnexion</button>
+                <button onclick="logout()" class="button">Logout</button>
             </div>
         </header>
         
         <nav>
-            <a href="dashboard.html" class="nav-link">Tableau de bord</a>
-            <a href="users.html" class="nav-link">Utilisateurs</a>
-            <a href="locations.html" class="nav-link">Lieux</a>
-            <a href="create-appointment.html" class="nav-link active">Créer rendez-vous</a>
-            <a href="analytics.html" class="nav-link">Analytiques</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="users.html" class="nav-link">Users</a>
+            <a href="locations.html" class="nav-link">Locations</a>
+            <a href="create-appointment.html" class="nav-link active">Create Appointment</a>
+            <a href="analytics.html" class="nav-link">Analytics</a>
         </nav>
         
         <main>
             <div class="section">
-                <h2>Nouveau rendez-vous</h2>
+                <h2>New Appointment</h2>
                 <form id="appointmentForm">
                     <div class="form-group">
-                        <label for="userId">Utilisateur:</label>
+                        <label for="userId">User:</label>
                         <select id="userId" name="userId" required></select>
                     </div>
                     <div class="form-group">
@@ -37,44 +37,44 @@
                         <select id="patientId" name="patientId" required></select>
                     </div>
                     <div class="form-group">
-                        <label for="locationId">Lieu:</label>
+                        <label for="locationId">Location:</label>
                         <select id="locationId" name="locationId" required></select>
                     </div>
                     <div class="form-group">
-                        <label for="purpose">But:</label>
+                        <label for="purpose">Purpose:</label>
                         <textarea id="purpose" name="purpose" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="durationMinutes">Durée (minutes):</label>
+                        <label for="durationMinutes">Duration (minutes):</label>
                         <input type="number" id="durationMinutes" name="durationMinutes" required>
                     </div>
                     <div class="form-group">
-                        <label for="priority">Priorité:</label>
+                        <label for="priority">Priority:</label>
                         <select id="priority" name="priority" required>
-                            <option value="Low">Faible</option>
-                            <option value="Medium">Moyenne</option>
-                            <option value="High">Élevée</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
                             <option value="Urgent">Urgent</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="status">Statut:</label>
+                        <label for="status">Status:</label>
                         <select id="status" name="status" required>
-                            <option value="Planned">Planifié</option>
-                            <option value="InProgress">En cours</option>
-                            <option value="Completed">Terminé</option>
-                            <option value="Cancelled">Annulé</option>
+                            <option value="Planned">Planned</option>
+                            <option value="InProgress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="appointmentTime">Date et heure:</label>
+                        <label for="appointmentTime">Date and Time:</label>
                         <input type="datetime-local" id="appointmentTime" name="appointmentTime" required>
                     </div>
                     <div class="form-group">
                         <label for="notes">Notes:</label>
                         <textarea id="notes" name="notes"></textarea>
                     </div>
-                    <button type="submit" class="button">Créer le rendez-vous</button>
+                    <button type="submit" class="button">Create Appointment</button>
                 </form>
                 <div id="warningMessage" class="warning-message"></div>
             </div>
@@ -96,4 +96,3 @@
     </script>
 </body>
 </html>
-

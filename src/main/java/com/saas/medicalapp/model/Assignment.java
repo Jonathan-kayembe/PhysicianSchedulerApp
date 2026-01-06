@@ -23,6 +23,9 @@ public class Assignment {
     @JoinColumn(name = "appointment_id", nullable = false)
     private Appointment appointment;
     
+    @Column(name = "assignment_type", length = 50)
+    private String assignmentType; // Support, Assistant, Coordinator, etc.
+    
     // Constructors
     public Assignment() {
     }
@@ -30,6 +33,12 @@ public class Assignment {
     public Assignment(User user, Appointment appointment) {
         this.user = user;
         this.appointment = appointment;
+    }
+    
+    public Assignment(User user, Appointment appointment, String assignmentType) {
+        this.user = user;
+        this.appointment = appointment;
+        this.assignmentType = assignmentType;
     }
     
     // Getters and Setters
@@ -55,6 +64,14 @@ public class Assignment {
     
     public void setAppointment(Appointment appointment) {
         this.appointment = appointment;
+    }
+    
+    public String getAssignmentType() {
+        return assignmentType;
+    }
+    
+    public void setAssignmentType(String assignmentType) {
+        this.assignmentType = assignmentType;
     }
 }
 

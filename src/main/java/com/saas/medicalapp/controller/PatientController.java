@@ -16,7 +16,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/patients")
-@CrossOrigin(origins = "*")
 public class PatientController {
     
     @Autowired
@@ -43,9 +42,10 @@ public class PatientController {
             String fullName = (String) request.get("fullName");
             Integer age = Integer.valueOf(request.get("age").toString());
             Integer locationId = Integer.valueOf(request.get("locationId").toString());
+            Integer primaryMedicalResponsibleId = Integer.valueOf(request.get("primaryMedicalResponsibleId").toString());
             String medicalNotes = (String) request.get("medicalNotes");
             
-            Patient patient = patientService.createPatient(fullName, age, locationId, medicalNotes);
+            Patient patient = patientService.createPatient(fullName, age, locationId, primaryMedicalResponsibleId, medicalNotes);
             
             response.put("success", true);
             response.put("message", "Patient created successfully");
@@ -66,9 +66,11 @@ public class PatientController {
             String fullName = (String) request.get("fullName");
             Integer age = Integer.valueOf(request.get("age").toString());
             Integer locationId = Integer.valueOf(request.get("locationId").toString());
+            Integer primaryMedicalResponsibleId = request.get("primaryMedicalResponsibleId") != null ? 
+                    Integer.valueOf(request.get("primaryMedicalResponsibleId").toString()) : null;
             String medicalNotes = (String) request.get("medicalNotes");
             
-            Patient patient = patientService.updatePatient(id, fullName, age, locationId, medicalNotes);
+            Patient patient = patientService.updatePatient(id, fullName, age, locationId, primaryMedicalResponsibleId, medicalNotes);
             
             response.put("success", true);
             response.put("patient", patient);

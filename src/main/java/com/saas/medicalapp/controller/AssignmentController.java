@@ -16,7 +16,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/assignments")
-@CrossOrigin(origins = "*")
 public class AssignmentController {
     
     @Autowired

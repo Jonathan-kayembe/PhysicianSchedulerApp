@@ -17,7 +17,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/locations")
-@CrossOrigin(origins = "*")
 public class LocationController {
     
     @Autowired

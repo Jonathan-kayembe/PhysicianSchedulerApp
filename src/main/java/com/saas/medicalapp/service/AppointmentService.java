@@ -91,11 +91,22 @@ public class AppointmentService {
         return null; // No overbooking
     }
     
+    /**
+     * Create a new appointment
+     * Validates that the primary responsible (user_id) is a medical role (Physician or Nurse)
+     */
     public Appointment createAppointment(Integer userId, Integer patientId, Integer locationId,
                                         String purpose, Integer durationMinutes, String priority,
                                         String status, String notes, LocalDateTime appointmentTime) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        // Validate that the user is a medical role (Physician or Nurse)
+        if (user.getRole() == null || !Boolean.TRUE.equals(user.getRole().getIsMedicalRole())) {
+            throw new RuntimeException("Appointment primary responsible must be a Physician or Nurse. " +
+                    "Staff members cannot be primary medical responsible.");
+        }
+        
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
         Location location = locationRepository.findById(locationId)

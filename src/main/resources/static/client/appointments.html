@@ -1,44 +1,45 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes rendez-vous - Medical Scheduling</title>
+    <title>My Appointments - Medical Scheduling</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Mes rendez-vous</h1>
+            <h1>My Appointments</h1>
             <div class="user-info">
                 <span id="userName"></span>
-                <button onclick="logout()" class="button">Déconnexion</button>
+                <button onclick="logout()" class="button">Logout</button>
             </div>
         </header>
         
         <nav>
-            <a href="dashboard.html" class="nav-link">Tableau de bord</a>
-            <a href="appointments.html" class="nav-link active">Rendez-vous</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="appointments.html" class="nav-link active">Appointments</a>
             <a href="patients.html" class="nav-link">Patients</a>
+            <a href="profile.html" class="nav-link">Profile</a>
         </nav>
         
         <main>
             <div class="filters">
-                <label for="statusFilter">Filtrer par statut:</label>
+                <label for="statusFilter">Filter by status:</label>
                 <select id="statusFilter" onchange="filterAppointments()">
-                    <option value="">Tous</option>
-                    <option value="Planned">Planifié</option>
-                    <option value="InProgress">En cours</option>
-                    <option value="Completed">Terminé</option>
-                    <option value="Cancelled">Annulé</option>
+                    <option value="">All</option>
+                    <option value="Planned">Planned</option>
+                    <option value="InProgress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
                 </select>
                 
-                <label for="priorityFilter">Filtrer par priorité:</label>
+                <label for="priorityFilter">Filter by priority:</label>
                 <select id="priorityFilter" onchange="filterAppointments()">
-                    <option value="">Tous</option>
-                    <option value="Low">Faible</option>
-                    <option value="Medium">Moyenne</option>
-                    <option value="High">Élevée</option>
+                    <option value="">All</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
                     <option value="Urgent">Urgent</option>
                 </select>
             </div>
@@ -57,4 +58,3 @@
     </script>
 </body>
 </html>
-
