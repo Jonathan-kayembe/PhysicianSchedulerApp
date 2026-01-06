@@ -104,11 +104,12 @@ public class PasswordMigrationService {
      */
     public boolean migrateUserPassword(String email, String plainTextPassword) {
         try {
-            User user = userRepository.findByEmailWithRole(email);
-            if (user == null) {
+            java.util.Optional<User> userOptional = userRepository.findByEmailWithRole(email);
+            if (userOptional.isEmpty()) {
                 return false;
             }
             
+            User user = userOptional.get();
             String hashedPassword = passwordEncoder.encode(plainTextPassword);
             user.setPassword(hashedPassword);
             userRepository.save(user);

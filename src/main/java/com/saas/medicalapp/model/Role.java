@@ -19,7 +19,7 @@ public class Role {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     
-    @Column(name = "is_medical_role", nullable = false)
+    @Column(name = "is_medical_role", nullable = true)
     private Boolean isMedicalRole = false;
     
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)

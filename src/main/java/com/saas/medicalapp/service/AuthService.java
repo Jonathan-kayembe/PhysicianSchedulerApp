@@ -5,10 +5,12 @@ import com.saas.medicalapp.model.User;
 import com.saas.medicalapp.repository.RoleRepository;
 import com.saas.medicalapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -91,12 +93,17 @@ public class AuthService {
         user.setEmail(email);
         user.setPassword(hashedPassword); // Store hashed password
         user.setRole(role);
+        user.setIsActive(true); // Set user as active by default
         
-        // Save user to database
-        User savedUser = userRepository.save(user);
-        userRepository.flush(); // Ensure immediate persistence
-        
-        return savedUser;
+        // Save user to database with error handling
+        try {
+            User savedUser = userRepository.save(user);
+            userRepository.flush(); // Ensure immediate persistence
+            return savedUser;
+        } catch (DataAccessException e) {
+            // Handle database errors (e.g., duplicate email, constraint violations)
+            throw new RuntimeException("Database error during registration: " + e.getMessage(), e);
+        }
     }
     
     /**
@@ -120,24 +127,41 @@ public class AuthService {
         }
         
         // Find user by email with role eagerly loaded
-        User user = userRepository.findByEmailWithRole(email);
-        if (user == null) {
+        Optional<User> userOptional;
+        try {
+            userOptional = userRepository.findByEmailWithRole(email);
+        } catch (DataAccessException e) {
+            // Handle database connection errors
+            throw new RuntimeException("Database error during login: " + e.getMessage(), e);
+        }
+        
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("Invalid email or password");
+        }
+        User user = userOptional.get();
+        
+        // Check if user is active (only if the field exists and is set)
+        if (user.getIsActive() != null && !user.getIsActive()) {
+            throw new RuntimeException("User account is inactive");
+        }
+        
+        // Verify password
+        // Si le mot de passe est haché (BCrypt), utiliser passwordEncoder.matches()
+        // Sinon, comparer directement (pour migration des anciens mots de passe en clair)
+        String storedPassword = user.getPassword();
+        if (storedPassword == null) {
             throw new RuntimeException("Invalid email or password");
         }
         
-        // Verify password using BCrypt
-        // BCrypt can verify both hashed passwords and plain text passwords (for migration)
-        String storedPassword = user.getPassword();
         boolean passwordMatches = false;
         
-        // Check if stored password is BCrypt hash (starts with $2a$, $2b$, or $2y$)
-        if (storedPassword != null && 
-            (storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$"))) {
-            // Password is hashed with BCrypt, use BCrypt to verify
+        // Vérifier si le mot de passe stocké est un hash BCrypt
+        if (storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$")) {
+            // Mot de passe haché avec BCrypt, utiliser passwordEncoder.matches()
             passwordMatches = passwordEncoder.matches(password, storedPassword);
         } else {
-            // Password is stored in plain text (legacy users), compare directly
-            // This allows migration period where some users have plain text passwords
+            // Mot de passe en clair (anciens utilisateurs), comparer directement
+            // Permet la période de migration où certains utilisateurs ont des mots de passe en clair
             passwordMatches = password.equals(storedPassword);
         }
         

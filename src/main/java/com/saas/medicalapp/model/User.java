@@ -2,6 +2,7 @@ package com.saas.medicalapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -29,6 +30,12 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+    
+    @Column(name = "is_active", nullable = true)
+    private Boolean isActive = true;
+    
+    @Column(name = "created_at", nullable = true, updatable = false)
+    private LocalDateTime createdAt;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -116,6 +123,32 @@ public class User {
     
     public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
+    }
+    
+    public Boolean getIsActive() {
+        return isActive;
+    }
+    
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (isActive == null) {
+            isActive = true;
+        }
     }
 }
 

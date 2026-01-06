@@ -25,27 +25,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     /**
      * Find user by email with role eagerly loaded
      * @param email user email
-     * @return User with role loaded
+     * @return Optional<User> with role loaded
      */
     @Query("SELECT u FROM User u JOIN FETCH u.role WHERE u.email = :email")
-    User findByEmailWithRole(@Param("email") String email);
-    
-    /**
-     * Find user by email and password
-     * @param email user email
-     * @param password user password
-     * @return User if found, null otherwise
-     */
-    User findByEmailAndPassword(String email, String password);
-    
-    /**
-     * Find user by email and password with role eagerly loaded
-     * @param email user email
-     * @param password user password
-     * @return User with role loaded if found, null otherwise
-     */
-    @Query("SELECT u FROM User u JOIN FETCH u.role WHERE u.email = :email AND u.password = :password")
-    User findByEmailAndPasswordWithRole(@Param("email") String email, @Param("password") String password);
+    Optional<User> findByEmailWithRole(@Param("email") String email);
     
     /**
      * Check if email exists
