@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du rendez-vous - Medical Scheduling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Détails du rendez-vous</h1>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button onclick="logout()" class="button">Déconnexion</button>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="dashboard.html" class="nav-link">Tableau de bord</a>
+            <a href="appointments.html" class="nav-link">Rendez-vous</a>
+            <a href="patients.html" class="nav-link">Patients</a>
+        </nav>
+        
+        <main>
+            <div id="appointmentDetails" class="appointment-details"></div>
+            
+            <div class="section">
+                <h2>Mettre à jour le statut</h2>
+                <form id="statusUpdateForm">
+                    <div class="form-group">
+                        <label for="status">Nouveau statut:</label>
+                        <select id="status" name="status" required>
+                            <option value="Planned">Planifié</option>
+                            <option value="InProgress">En cours</option>
+                            <option value="Completed">Terminé</option>
+                            <option value="Cancelled">Annulé</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="button">Mettre à jour</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="client.js"></script>
+    <script>
+        // Get appointment ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const appointmentId = urlParams.get('id');
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            if (appointmentId) {
+                loadAppointmentDetails(appointmentId);
+            }
+        });
+        
+        // Status update form handler
+        document.getElementById('statusUpdateForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            await updateAppointmentStatus(event);
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,373 @@
+/* Medical Scheduling SaaS - Client Frontend Styles */
+/* Beige Theme - Simplified Design */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Beige */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    color: #8b7355;
+    font-size: 24px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Navigation */
+nav {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-link {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #8b7355;
+    border: 1px solid #8b7355;
+    background-color: #d4c5a9;
+}
+
+.nav-link:hover {
+    background-color: #c4b599;
+}
+
+.nav-link.active {
+    background-color: #8b7355;
+    color: white;
+}
+
+/* Login Page */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5dc;
+}
+
+.login-card {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card h1 {
+    color: #8b7355;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #8b7355;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #8b7355;
+    background-color: white;
+    font-size: 14px;
+}
+
+/* Buttons */
+.button {
+    background-color: #d4c5a9;
+    border: 1px solid #8b7355;
+    padding: 10px 20px;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #c4b599;
+}
+
+/* Cards */
+.card {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.stat-card {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-card h3 {
+    color: #8b7355;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.stat-card p {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Sections */
+.section {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    color: #8b7355;
+    margin-bottom: 15px;
+}
+
+/* Appointments List */
+.appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.appointment-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.appointment-card h3 {
+    color: #8b7355;
+    margin-bottom: 10px;
+}
+
+.appointment-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.priority-Low {
+    background-color: #90EE90;
+    color: #333;
+}
+
+.priority-Medium {
+    background-color: #FFD700;
+    color: #333;
+}
+
+.priority-High {
+    background-color: #FFA500;
+    color: #333;
+}
+
+.priority-Urgent {
+    background-color: #FF6347;
+    color: white;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.status-Planned {
+    background-color: #87CEEB;
+    color: #333;
+}
+
+.status-InProgress {
+    background-color: #FFD700;
+    color: #333;
+}
+
+.status-Completed {
+    background-color: #90EE90;
+    color: #333;
+}
+
+.status-Cancelled {
+    background-color: #D3D3D3;
+    color: #333;
+}
+
+/* Patients List */
+.patients-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.patient-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.patient-card h3 {
+    color: #8b7355;
+    margin-bottom: 10px;
+}
+
+.patient-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Filters */
+.filters {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.filters label {
+    color: #8b7355;
+    font-weight: bold;
+}
+
+.filters select {
+    padding: 8px;
+    border: 1px solid #8b7355;
+    background-color: white;
+}
+
+/* Appointment Details */
+.appointment-details {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.appointment-details h2 {
+    color: #8b7355;
+    margin-bottom: 15px;
+}
+
+.appointment-details .detail-row {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: white;
+    border-left: 3px solid #8b7355;
+}
+
+.appointment-details .detail-label {
+    font-weight: bold;
+    color: #8b7355;
+}
+
+/* Error Messages */
+.error-message {
+    color: #FF6347;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #FFE4E1;
+    border: 1px solid #FF6347;
+}
+
+.success-message {
+    color: #228B22;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #F0FFF0;
+    border: 1px solid #228B22;
+}
+
+/* Links */
+a {
+    color: #8b7355;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+    }
+    
+    nav {
+        flex-direction: column;
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+

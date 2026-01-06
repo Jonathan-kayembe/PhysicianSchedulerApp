@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des utilisateurs - Medical Scheduling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gestion des utilisateurs</h1>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button onclick="logout()" class="button">Déconnexion</button>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="dashboard.html" class="nav-link">Tableau de bord</a>
+            <a href="users.html" class="nav-link active">Utilisateurs</a>
+            <a href="locations.html" class="nav-link">Lieux</a>
+            <a href="create-appointment.html" class="nav-link">Créer rendez-vous</a>
+            <a href="analytics.html" class="nav-link">Analytiques</a>
+        </nav>
+        
+        <main>
+            <button onclick="showAddUserForm()" class="button">Ajouter un utilisateur</button>
+            
+            <div id="addUserForm" class="form-container" style="display: none;">
+                <h2>Ajouter un utilisateur</h2>
+                <form id="userForm">
+                    <div class="form-group">
+                        <label for="fullName">Nom complet:</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roleId">Rôle:</label>
+                        <select id="roleId" name="roleId" required>
+                            <option value="1">Physician</option>
+                            <option value="2">Nurse</option>
+                            <option value="3">Staff</option>
+                            <option value="4">Manager</option>
+                            <option value="5">SuperAdmin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="button">Créer</button>
+                    <button type="button" onclick="hideAddUserForm()" class="button">Annuler</button>
+                </form>
+            </div>
+            
+            <div id="usersList" class="users-list"></div>
+        </main>
+    </div>
+    <script src="manager.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadUsers();
+        });
+        
+        document.getElementById('userForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            await addUser(event);
+        });
+    </script>
+</body>
+</html>
+

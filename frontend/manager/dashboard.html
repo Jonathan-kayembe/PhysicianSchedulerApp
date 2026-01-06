@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Manager - Medical Scheduling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tableau de bord Manager</h1>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button onclick="logout()" class="button">Déconnexion</button>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="dashboard.html" class="nav-link active">Tableau de bord</a>
+            <a href="users.html" class="nav-link">Utilisateurs</a>
+            <a href="locations.html" class="nav-link">Lieux</a>
+            <a href="create-appointment.html" class="nav-link">Créer rendez-vous</a>
+            <a href="analytics.html" class="nav-link">Analytiques</a>
+        </nav>
+        
+        <main>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total utilisateurs</h3>
+                    <p id="totalUsers">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total patients</h3>
+                    <p id="totalPatients">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total rendez-vous</h3>
+                    <p id="totalAppointments">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total lieux</h3>
+                    <p id="totalLocations">0</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Rendez-vous récents</h2>
+                <div id="recentAppointments" class="appointments-list"></div>
+            </div>
+        </main>
+    </div>
+    <script src="manager.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadDashboardStats();
+        });
+    </script>
+</body>
+</html>
+
