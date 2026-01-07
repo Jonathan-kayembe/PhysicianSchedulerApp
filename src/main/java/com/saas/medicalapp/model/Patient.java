@@ -1,5 +1,7 @@
 package com.saas.medicalapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class Patient {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "primary_medical_responsible_id", nullable = false)
+    @JsonIgnoreProperties({"appointments", "availabilities", "assignments"})
     private User primaryMedicalResponsible;
     
     @Column(name = "medical_notes", columnDefinition = "TEXT")
@@ -48,6 +51,7 @@ public class Patient {
     private String emergencyPhone;
     
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Appointment> appointments;
     
     // Constructors

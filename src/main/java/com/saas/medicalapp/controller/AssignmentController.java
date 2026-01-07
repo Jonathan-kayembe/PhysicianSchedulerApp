@@ -32,12 +32,38 @@ public class AssignmentController {
         try {
             Integer userId = Integer.valueOf(request.get("userId").toString());
             Integer appointmentId = Integer.valueOf(request.get("appointmentId").toString());
+            String assignmentType = request.get("assignmentType") != null ? 
+                    (String) request.get("assignmentType") : "Support";
             
-            Assignment assignment = assignmentService.createAssignment(userId, appointmentId);
+            Assignment assignment = assignmentService.createAssignment(userId, appointmentId, assignmentType);
             
             response.put("success", true);
-            response.put("message", "Assignment created successfully");
+            response.put("message", "Assignment créé avec succès");
             response.put("assignment", assignment);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+    
+    @GetMapping("/appointment/{appointmentId}")
+    public ResponseEntity<List<Assignment>> getAppointmentAssignments(@PathVariable Integer appointmentId) {
+        try {
+            return ResponseEntity.ok(assignmentService.getAppointmentAssignments(appointmentId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> deleteAssignment(@PathVariable Integer id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            assignmentService.deleteAssignment(id);
+            response.put("success", true);
+            response.put("message", "Assignment supprimé avec succès");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("success", false);

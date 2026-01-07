@@ -29,21 +29,27 @@ public class PatientService {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private PatientDistributionService distributionService;
+    
     public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+        // Utiliser findAllWithRelations pour charger toutes les relations
+        return patientRepository.findAllWithRelations();
     }
     
     public Patient getPatientById(Integer id) {
-        return patientRepository.findById(id)
+        // Utiliser findByIdWithRelations pour charger toutes les relations
+        return patientRepository.findByIdWithRelations(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
     }
     
     /**
      * Create a new patient with primary medical responsible
+     * Si primaryMedicalResponsibleId est null, assigne automatiquement au personnel le moins chargé
      * @param fullName Patient's full name
      * @param age Patient's age
      * @param locationId Location ID
-     * @param primaryMedicalResponsibleId User ID of Physician or Nurse (must be medical role)
+     * @param primaryMedicalResponsibleId User ID of Physician or Nurse (must be medical role), null pour attribution automatique
      * @param medicalNotes Medical notes
      * @return Created patient
      */
@@ -52,13 +58,20 @@ public class PatientService {
         Location location = locationRepository.findById(locationId)
                 .orElseThrow(() -> new RuntimeException("Location not found"));
         
-        User medicalResponsible = userRepository.findById(primaryMedicalResponsibleId)
-                .orElseThrow(() -> new RuntimeException("Medical responsible not found"));
+        User medicalResponsible;
         
-        // Validate that the user is a medical role (Physician or Nurse)
-        if (medicalResponsible.getRole() == null || 
-            !Boolean.TRUE.equals(medicalResponsible.getRole().getIsMedicalRole())) {
-            throw new RuntimeException("Primary medical responsible must be a Physician or Nurse");
+        if (primaryMedicalResponsibleId == null) {
+            // Attribution automatique au personnel le moins chargé
+            medicalResponsible = distributionService.findLeastLoadedMedicalStaff(locationId);
+        } else {
+            medicalResponsible = userRepository.findById(primaryMedicalResponsibleId)
+                    .orElseThrow(() -> new RuntimeException("Medical responsible not found"));
+            
+            // Validate that the user is a medical role (Physician or Nurse)
+            if (medicalResponsible.getRole() == null || 
+                !Boolean.TRUE.equals(medicalResponsible.getRole().getIsMedicalRole())) {
+                throw new RuntimeException("Primary medical responsible must be a Physician or Nurse");
+            }
         }
         
         Patient patient = new Patient();

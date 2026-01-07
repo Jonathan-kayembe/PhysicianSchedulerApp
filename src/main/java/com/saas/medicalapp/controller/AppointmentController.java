@@ -23,8 +23,20 @@ public class AppointmentController {
     private AppointmentService appointmentService;
     
     @GetMapping
-    public ResponseEntity<List<Appointment>> getUserAppointments(@RequestParam Integer userId) {
-        return ResponseEntity.ok(appointmentService.getUserAppointments(userId));
+    public ResponseEntity<?> getUserAppointments(@RequestParam Integer userId) {
+        try {
+            if (userId == null) {
+                return ResponseEntity.badRequest().body("User ID is required");
+            }
+            List<Appointment> appointments = appointmentService.getUserAppointments(userId);
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Error loading appointments: " + e.getMessage());
+            errorResponse.put("error", e.getClass().getSimpleName());
+            return ResponseEntity.status(500).body(errorResponse);
+        }
     }
     
     @PostMapping

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,5 +37,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @return true if email exists
      */
     boolean existsByEmail(String email);
+    
+    /**
+     * Find all medical staff (Physicians and Nurses) with role loaded
+     * @return List of medical staff users
+     */
+    @Query("SELECT u FROM User u JOIN FETCH u.role r WHERE r.isMedicalRole = true AND u.isActive = true")
+    List<User> findAllMedicalStaff();
 }
 

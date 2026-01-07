@@ -1,5 +1,6 @@
 package com.saas.medicalapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalTime;
 import java.util.List;
@@ -32,9 +33,11 @@ public class Location {
     private Integer capacityPerDay;
     
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Patient> patients;
     
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Appointment> appointments;
     
     // Constructors

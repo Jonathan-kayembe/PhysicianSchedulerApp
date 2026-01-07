@@ -163,17 +163,26 @@ function loadUserInfo() {
 }
 
 async function loadDashboardData() {
-    if (!currentUser) return;
+    if (!currentUser) {
+        console.error('No current user found');
+        return;
+    }
     
     try {
+        console.log('Loading dashboard data for user:', currentUser.id, currentUser.fullName);
+        
         const appointments = await apiCall(`/appointments?userId=${currentUser.id}`);
+        console.log('Appointments loaded:', appointments);
+        
         const patients = await apiCall('/patients');
+        console.log('Patients loaded:', patients);
         
         // Calculate stats
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         
         const todayAppointments = appointments.filter(apt => {
+            if (!apt || !apt.appointmentTime) return false;
             const aptDate = new Date(apt.appointmentTime);
             aptDate.setHours(0, 0, 0, 0);
             return aptDate.getTime() === today.getTime();
@@ -185,19 +194,36 @@ async function loadDashboardData() {
         weekEnd.setDate(weekStart.getDate() + 7);
         
         const weekAppointments = appointments.filter(apt => {
+            if (!apt || !apt.appointmentTime) return false;
             const aptDate = new Date(apt.appointmentTime);
             return aptDate >= weekStart && aptDate < weekEnd;
         });
         
+        console.log('Today appointments:', todayAppointments.length);
+        console.log('Week appointments:', weekAppointments.length);
+        console.log('Total patients:', patients.length);
+        
         // Display stats
         document.getElementById('todayAppointments').textContent = todayAppointments.length;
         document.getElementById('weekAppointments').textContent = weekAppointments.length;
-        document.getElementById('totalPatients').textContent = patients.length;
+        document.getElementById('totalPatients').textContent = patients ? patients.length : 0;
         
         // Display today's appointments
         displayAppointments(todayAppointments, 'todayAppointmentsList');
+        
+        // Store week appointments globally for filtering
+        window.weekAppointments = weekAppointments;
+        
+        // Display week appointments
+        displayWeekAppointments(weekAppointments);
     } catch (error) {
         console.error('Error loading dashboard:', error);
+        console.error('Error details:', error.message, error.stack);
+        // Afficher un message d'erreur à l'utilisateur
+        const container = document.getElementById('todayAppointmentsList');
+        if (container) {
+            container.innerHTML = '<p class="error-message">Erreur lors du chargement des données. Vérifiez la console pour plus de détails.</p>';
+        }
     }
 }
 
@@ -206,23 +232,88 @@ function displayAppointments(appointments, containerId) {
     if (!container) return;
     
     if (appointments.length === 0) {
-        container.innerHTML = '<p>No appointments</p>';
+        container.innerHTML = '<p>Aucun rendez-vous</p>';
         return;
     }
     
-    container.innerHTML = appointments.map(apt => `
+    // Sort appointments by time
+    const sortedAppointments = [...appointments].sort((a, b) => {
+        return new Date(a.appointmentTime) - new Date(b.appointmentTime);
+    });
+    
+    container.innerHTML = sortedAppointments.map(apt => `
         <div class="appointment-card">
-            <h3>${apt.patient.fullName} 
-                <span class="priority-badge priority-${apt.priority}">${apt.priority}</span>
-                <span class="status-badge status-${apt.status}">${apt.status}</span>
+            <h3>${apt.patient ? apt.patient.fullName : 'Patient inconnu'} 
+                <span class="priority-badge priority-${apt.priority ? apt.priority.toLowerCase() : 'medium'}">${apt.priority || 'Medium'}</span>
+                <span class="status-badge status-${apt.status ? apt.status.toLowerCase() : 'planned'}">${apt.status || 'Planned'}</span>
             </h3>
-            <p><strong>Date:</strong> ${new Date(apt.appointmentTime).toLocaleString('en-US')}</p>
-            <p><strong>Location:</strong> ${apt.location.name}</p>
-            <p><strong>Purpose:</strong> ${apt.purpose}</p>
-            <p><strong>Duration:</strong> ${apt.durationMinutes} minutes</p>
-            <a href="task-detail.html?id=${apt.id}" class="button">View details</a>
+            <p><strong>Date:</strong> ${new Date(apt.appointmentTime).toLocaleString('fr-FR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            })}</p>
+            <p><strong>Lieu:</strong> ${apt.location ? apt.location.name : 'Non spécifié'}</p>
+            <p><strong>Objectif:</strong> ${apt.purpose || 'Non spécifié'}</p>
+            <p><strong>Durée:</strong> ${apt.durationMinutes || 30} minutes</p>
+            ${apt.notes ? `<p><strong>Notes:</strong> ${apt.notes}</p>` : ''}
         </div>
     `).join('');
+}
+
+function displayWeekAppointments(appointments) {
+    displayAppointments(appointments, 'weekAppointmentsList');
+}
+
+function filterWeekAppointments(day, buttonElement) {
+    if (!window.weekAppointments) return;
+    
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    if (buttonElement) {
+        buttonElement.classList.add('active');
+    } else {
+        // Fallback: trouver le bouton correspondant
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+            const btnText = btn.textContent.toLowerCase().trim();
+            if ((day === 'all' && btnText.includes('all')) ||
+                (day !== 'all' && btnText.includes(day))) {
+                btn.classList.add('active');
+            }
+        });
+    }
+    
+    if (day === 'all') {
+        displayWeekAppointments(window.weekAppointments);
+        return;
+    }
+    
+    const dayMap = {
+        'monday': 1,
+        'tuesday': 2,
+        'wednesday': 3,
+        'thursday': 4,
+        'friday': 5,
+        'saturday': 6,
+        'sunday': 0
+    };
+    
+    const targetDay = dayMap[day];
+    if (targetDay === undefined) {
+        displayWeekAppointments(window.weekAppointments);
+        return;
+    }
+    
+    const filtered = window.weekAppointments.filter(apt => {
+        if (!apt || !apt.appointmentTime) return false;
+        const aptDate = new Date(apt.appointmentTime);
+        return aptDate.getDay() === targetDay;
+    });
+    
+    displayWeekAppointments(filtered);
 }
 
 // ============================================

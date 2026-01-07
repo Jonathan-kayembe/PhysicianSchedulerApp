@@ -22,8 +22,17 @@ public class PatientController {
     private PatientService patientService;
     
     @GetMapping
-    public ResponseEntity<List<Patient>> getAllPatients() {
-        return ResponseEntity.ok(patientService.getAllPatients());
+    public ResponseEntity<?> getAllPatients() {
+        try {
+            List<Patient> patients = patientService.getAllPatients();
+            return ResponseEntity.ok(patients);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Error loading patients: " + e.getMessage());
+            errorResponse.put("error", e.getClass().getSimpleName());
+            return ResponseEntity.status(500).body(errorResponse);
+        }
     }
     
     @GetMapping("/{id}")
@@ -42,14 +51,22 @@ public class PatientController {
             String fullName = (String) request.get("fullName");
             Integer age = Integer.valueOf(request.get("age").toString());
             Integer locationId = Integer.valueOf(request.get("locationId").toString());
-            Integer primaryMedicalResponsibleId = Integer.valueOf(request.get("primaryMedicalResponsibleId").toString());
-            String medicalNotes = (String) request.get("medicalNotes");
+            Integer primaryMedicalResponsibleId = request.get("primaryMedicalResponsibleId") != null ? 
+                    Integer.valueOf(request.get("primaryMedicalResponsibleId").toString()) : null;
+            String medicalNotes = request.get("medicalNotes") != null ? 
+                    (String) request.get("medicalNotes") : "";
             
             Patient patient = patientService.createPatient(fullName, age, locationId, primaryMedicalResponsibleId, medicalNotes);
             
             response.put("success", true);
-            response.put("message", "Patient created successfully");
+            response.put("message", primaryMedicalResponsibleId == null ? 
+                    "Patient créé avec attribution automatique au personnel le moins chargé" : 
+                    "Patient créé avec succès");
             response.put("patient", patient);
+            if (primaryMedicalResponsibleId == null) {
+                response.put("autoAssigned", true);
+                response.put("assignedTo", patient.getPrimaryMedicalResponsible().getFullName());
+            }
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("success", false);

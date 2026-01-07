@@ -43,6 +43,21 @@
                 <h2>Today's Appointments</h2>
                 <div id="todayAppointmentsList" class="appointments-list"></div>
             </div>
+            
+            <div class="section">
+                <h2>This Week's Appointments</h2>
+                <div class="week-filter">
+                    <button class="filter-btn active" onclick="filterWeekAppointments('all', this)">Toute la semaine</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('monday', this)">Lundi</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('tuesday', this)">Mardi</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('wednesday', this)">Mercredi</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('thursday', this)">Jeudi</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('friday', this)">Vendredi</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('saturday', this)">Samedi</button>
+                    <button class="filter-btn" onclick="filterWeekAppointments('sunday', this)">Dimanche</button>
+                </div>
+                <div id="weekAppointmentsList" class="appointments-list"></div>
+            </div>
         </main>
     </div>
     <script src="client.js"></script>

@@ -15,9 +15,24 @@ import java.util.List;
  */
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
-    List<Appointment> findByUserId(Integer userId);
     
-    @Query("SELECT a FROM Appointment a WHERE a.user.id = :userId AND a.appointmentTime >= :startTime AND a.appointmentTime < :endTime")
+    /**
+     * Find appointments by user ID with all relations loaded (patient, location, user)
+     */
+    @Query("SELECT a FROM Appointment a " +
+           "JOIN FETCH a.patient " +
+           "JOIN FETCH a.location " +
+           "JOIN FETCH a.user " +
+           "WHERE a.user.id = :userId " +
+           "ORDER BY a.appointmentTime ASC")
+    List<Appointment> findByUserId(@Param("userId") Integer userId);
+    
+    @Query("SELECT a FROM Appointment a " +
+           "JOIN FETCH a.patient " +
+           "JOIN FETCH a.location " +
+           "JOIN FETCH a.user " +
+           "WHERE a.user.id = :userId AND a.appointmentTime >= :startTime AND a.appointmentTime < :endTime " +
+           "ORDER BY a.appointmentTime ASC")
     List<Appointment> findByUserIdAndTimeRange(@Param("userId") Integer userId, 
                                                 @Param("startTime") LocalDateTime startTime, 
                                                 @Param("endTime") LocalDateTime endTime);
